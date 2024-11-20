@@ -1,0 +1,25 @@
+{
+  "name": "playwright-js-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js Features/*.feature --format=json:output/report.json && npm run generate-report",
+    "test:local": "cross-env HEADLESS=true DEVICE=Chrome VIDEO=true SCREENSHOT=true cucumber-js Features/*.feature --format=json:output/report.json && npm run generate-report",
+    "test:cucumber": "cucumber-js Features/*.feature",
+    "generate-report": "node support/generateCucumberReport.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.32.3",
+    "cross-env": "^7.0.3",
+    "cucumber-html-reporter": "^7.1.1",
+    "dotenv": "^16.4.5",
+    "playwright": "^1.32.3"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^10.3.1"
+  }
+}
