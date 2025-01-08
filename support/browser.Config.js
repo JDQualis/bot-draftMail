@@ -14,15 +14,15 @@ const getBrowser = async () => {
     return browser;
 };
 
-const configureContext = async () => {
+const configureContext = async (browser) => {
     let devices = isMobile ? device : browserType;
-
     let contextOptions = config.projects.find(project => project.name === devices)?.use || {};
     contextOptions.ignoreHTTPSErrors = true;
     if (recordVideo) {
         contextOptions.recordVideo = { dir: './videos/' };
     }
     let context = await browser.newContext(contextOptions);
+    global.context = context;
     global.page = await context.newPage();
 };
 
