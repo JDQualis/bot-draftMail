@@ -10,7 +10,7 @@ Este proyecto se centra en explorar las capacidades de Playwright, un marco de a
 
 1. Clona este repositorio en tu máquina local:
 
-git clone https://github.com/Khimea/POC-Playwright.git
+git clone [https://github.com/Khimea/POC-Playwright.git](https://github.com/Qualis-Lab-QA/Template-Playwright)
 
 
 2. Navega al directorio del proyecto:
