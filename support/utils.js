@@ -22,12 +22,13 @@ const takeScreenshot = async (nameFile) => {
     }
 };
 
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 const saveVideo = async (nameFile) => {
     if (recordVideo) {
         videoname = await page.video().path()
         global.page.close();
         await sleep(1000);
-
         try {
             await fs.promises.rename(videoname, "./videos/" + nameFile + ".webm");
             //console.log("Video guardado: " + nameFile);
