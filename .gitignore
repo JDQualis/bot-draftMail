@@ -10,3 +10,4 @@ output/TestReport_$(npm
 .idea/modules.xml
 .idea/POC-Playwright.iml
 .idea/vcs.xml
+/screenshots
