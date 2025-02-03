@@ -13,11 +13,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.32.3",
+    "@playwright/test": "^1.50.1",
     "cross-env": "^7.0.3",
-    "cucumber-html-reporter": "^7.1.1",
-    "dotenv": "^16.4.5",
-    "playwright": "^1.32.3"
+    "cucumber-html-reporter": "^6.0.0",
+    "dotenv": "^16.4.5"
   },
   "dependencies": {
     "@cucumber/cucumber": "^10.3.1"

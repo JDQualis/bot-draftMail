@@ -1,7 +1,5 @@
 const { expect } = require('@playwright/test');
-const { waitForDialog } = require('@playwright/test');
 const assert = require('node:assert').strict
-
 
 const elements = require("./objDemoblaze").demoblazeLocators
 const formulario = elements.formulario1
@@ -17,8 +15,8 @@ class PageDemoblaze {
 
     async addToCart() {
         await elements.addProductToCart().click();
-        const dialog = await waitForDialog;
-        if (dialog && !dialog.handled()) {
+        const dialog = await global.page.waitForEvent('dialog');
+        if (dialog) {
             await dialog.accept();
         }
     }

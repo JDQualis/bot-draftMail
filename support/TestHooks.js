@@ -1,4 +1,4 @@
-const { Before, AfterAll, After } = require('@cucumber/cucumber')
+const { Before, After } = require('@cucumber/cucumber')
 let { setDefaultTimeout } = require('@cucumber/cucumber')
 const utils = require("./utils");
 const config = require("./browser.Config")
