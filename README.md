@@ -9,28 +9,54 @@ Este proyecto se centra en explorar las capacidades de Playwright, un marco de a
 ## Instalación
 
 1. Clona este repositorio en tu máquina local:
-
+```
 git clone [https://github.com/Khimea/POC-Playwright.git](https://github.com/Qualis-Lab-QA/Template-Playwright)
-
+```
 
 2. Navega al directorio del proyecto:
-
+```
 cd POC-Playwright
+```
 
+3. Instala playwright
+```
+npx install playwright
+```
 
-3. Instala las dependencias utilizando npm:
-
+4. Instala las dependencias utilizando npm:
+```
 npm install
+```
+
+5. Instala extensión de Cucumber en VS Code:
+
+Buscá en el explorador de extensiónes 
+
+**Gherkin Beautifier**
+
+
+6. Configura la extensión de Cucumber en VS Code:
+Una vez instalada la extensión, hay que ingresar la siguiente configuración en VS Code.
+Ingresar a...
+ 
 
 
 ## Uso
 
 Una vez que hayas instalado las dependencias, puedes ejecutar las pruebas utilizando el siguiente comando:
-
+```
 npm test
-
+```
 
 Este comando ejecutará las pruebas definidas en el directorio `tests/`.
+
+
+Algunas de las opciones de ejecución de los test son:
+
+```sh
+npm test:cucumber   # Dispara los escenarios del feature
+npm test:local      # Dispara la ejecución de manera headless y genera los reportes
+```
 
 ## Contribución
 
