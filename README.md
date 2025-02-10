@@ -31,14 +31,28 @@ npm install
 5. Instala extensión de Cucumber en VS Code:
 
 Buscá en el explorador de extensiónes 
-
+```
 **Gherkin Beautifier**
-
+```
 
 6. Configura la extensión de Cucumber en VS Code:
 Una vez instalada la extensión, hay que ingresar la siguiente configuración en VS Code.
-Ingresar a...
- 
+Ingresar a las configuraciones de la extensión y abrir el "Edit in setting.json"
+Debemos agregar este codigo dentro del JSON para que funcione de manera correcta la extensión.
+
+```
+"cucumberautocomplete.steps": [
+        "cypress/e2e/step_definitions/*.js",
+        "src/step_definitions/*.js"
+    ],
+    "cucumberautocomplete.syncfeatures": "features/*.feature",
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "cucumberautocomplete.onTypeFormat": true,
+    "cucumberautocomplete.strictGherkinCompletion": true,
+    "cucumberautocomplete.strictGherkinValidation": true,
+ ```
 
 
 ## Uso
