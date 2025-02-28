@@ -4,21 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cucumber-js Features/*.feature --format=json:output/report.json && npm run generate-report",
+    "test": "cross-env SCREENSHOT=true cucumber-js Features/*.feature --format=json:tests/reports/cucumber-report.json && npm run allure",
     "test:local": "cross-env HEADLESS=true DEVICE=Chrome VIDEO=true SCREENSHOT=true cucumber-js Features/*.feature --format=json:output/report.json && npm run generate-report",
     "test:cucumber": "cucumber-js Features/*.feature",
-    "generate-report": "node support/generateCucumberReport.js"
+    "generate-report": "node support/generateCucumberReport.js",
+    "allure": "allure generate tests/reports/allure-results -o tests/reports/allure-report"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.50.1",
+    "@cucumber/cucumber": "^11.2.0",
+    "@cucumber/messages": "^27.2.0",
+    "@playwright/test": "^1.50.0",
+    "allure-commandline": "^2.14.0",
+    "allure-cucumberjs": "^3.2.0",
+    "allure-playwright": "^3.0.9",
     "cross-env": "^7.0.3",
     "cucumber-html-reporter": "^6.0.0",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "playwright": "^1.50.0"
   },
   "dependencies": {
-    "@cucumber/cucumber": "^10.3.1"
+    "@cucumber/cucumber": "^10.3.1",
   }
 }

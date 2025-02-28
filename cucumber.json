@@ -1,10 +1,15 @@
 {
-    "default":{
-        "failFast": false,
-        "require": [
-            "src/step_definitions/*.js",
-            "page/*.js",
-            "support/*.js"
-        ]
+    "default": {
+      "failFast": false,
+      "require": [
+        "src/step_definitions/*.js",
+        "page/*.js",
+        "support/*.js"
+      ],
+      "format": ["allure-cucumberjs/reporter"],  
+      "formatOptions": {
+        "resultsDir": "tests/reports/allure-results"
+      }
     }
-}
+  }
+  
