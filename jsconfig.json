@@ -1,8 +1,7 @@
 {
-    "compilerOptions": {
-      "checkJs": true,
-      "types": ["@playwright/test", "./global.d.ts"]
-    },
-    "include": ["global.d.ts", "src/**/*.js"]
-  }
-  
+  "compilerOptions": {
+    "checkJs": true,
+    "types": ["@playwright/test", "./global.d.ts"]
+  },
+  "include": ["global.d.ts", "output/src/**/*.js", "support/**/*.js"],
+}

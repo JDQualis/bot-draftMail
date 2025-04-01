@@ -1,4 +1,3 @@
-
 const path = require('path');
 const headless = process.env.HEADLESS === 'true' ? true : false;
 const recordVideo = process.env.VIDEO === 'true' ? true : false;
@@ -19,7 +18,7 @@ const configureContext = async (browser) => {
     let contextOptions = config.projects.find(project => project.name === devices)?.use || {};
     contextOptions.ignoreHTTPSErrors = true;
     if (recordVideo) {
-        contextOptions.recordVideo = { dir: './videos/' };
+        contextOptions.recordVideo = { dir: './output/videos/' };
     }
     let context = await browser.newContext(contextOptions);
     global.context = context;

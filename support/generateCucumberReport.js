@@ -5,7 +5,7 @@ const reportName = require('./utils').getDate()
 function generateCucumberReport() {
     const jsonFile = './output/report.json';
     const htmlFile = `./output/${reportName}.html`;
-    const screenshots= './screenshots/'
+    const screenshots = './screenshots/'
     const options = {
         theme: 'bootstrap',
         jsonFile: jsonFile,
