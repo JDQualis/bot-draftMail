@@ -1,12 +1,13 @@
-# POC-Playwright
+
+# POC-Playwright 🚀
 
 Este repositorio contiene una prueba de concepto (PoC) para el uso de Playwright en proyectos de automatización de pruebas, utilizando Cucumber y Node.js.
 
-## Descripción
+## Descripción 📚
 
 Este proyecto se centra en explorar las capacidades de Playwright, un marco de automatización de pruebas moderno para navegadores web. La PoC incluye ejemplos básicos de escritura de pruebas utilizando Playwright para interactuar con navegadores como Chrome, Firefox y WebKit, junto con Cucumber para escribir pruebas en lenguaje natural.
 
-## Instalación
+## Instalación 🛠️
 
 1. Clona este repositorio en tu máquina local:
 ```
@@ -18,7 +19,7 @@ git clone [https://github.com/Khimea/POC-Playwright.git](https://github.com/Qual
 cd POC-Playwright
 ```
 
-3. Instala playwright
+3. Instala playwright:
 ```
 npx install playwright
 ```
@@ -30,20 +31,18 @@ npm install
 
 5. Instala extensión de Cucumber en VS Code:
 
-Buscá en el explorador de extensiónes 
+Busca en el explorador de extensiones:
 ```
-**Cucumber - Cucumber**
-**Playwright Test for VSCode - Microsoft**
-**Playwright Test Snippets - Marl Skeleton**
-**Gherkin Beautifier - Siarhei Kuchuk**
-**test Cucumber (Gherkin) Full Support - Robin GROSS**
-
+- Cucumber - Cucumber
+- Playwright Test for VSCode - Microsoft
+- Playwright Test Snippets - Marl Skeleton
+- Gherkin Beautifier - Siarhei Kuchuk
+- Test Cucumber (Gherkin) Full Support - Robin GROSS
 ```
 
 6. Configura la extensión de Cucumber en VS Code:
 Una vez instalada la extensión, hay que ingresar la siguiente configuración en VS Code.
-Ingresar a las configuraciones de la extensión y abrir el "Edit in setting.json"
-Debemos agregar este codigo dentro del JSON para que funcione de manera correcta la extensión.
+Abre las configuraciones de la extensión y edita el archivo `settings.json` con el siguiente código:
 
 ```
 {
@@ -72,12 +71,12 @@ Debemos agregar este codigo dentro del JSON para que funcione de manera correcta
     "git.confirmSync": false,
     "liveServer.settings.donotShowInfoMsg": true
 }
- ```
- 7. Instalar Java para el reporte ALLURE:
- 
- Es necesario instalar Java para el Allure.
+```
 
-## Uso
+7. Instalar Java para el reporte ALLURE:
+Es necesario instalar Java para Allure.
+
+## Uso 🏃‍♂️
 
 Una vez que hayas instalado las dependencias, puedes ejecutar las pruebas utilizando los siguientes comandos:
 ```
@@ -89,7 +88,7 @@ npm run test:tag          # Ejecuta las pruebas con un filtro de tags
 npm run generate-report   # Genera y abre el reporte de Allure
 ```
 
-Para utilizar los tags, debemos ingresar el tag previo al step en el Feature 
+Para utilizar los tags, debemos ingresar el tag previo al step en el Feature:
 
 ```
  @tagEjemplo
@@ -103,10 +102,9 @@ El comando para disparar el tag es el siguiente:
 npm run test:tag --tags "@tagEjemplo"
 ```
 
-## Creación de carpeta para Generar Reportes 
+## Creación de carpeta para Generar Reportes 🗂️
 
-Cuando las pruebas se ejecutan de manera local o en un pipeline, se deben los generar las carpetas.
-Desde el pipeline se debe pasar la creación de esas carpetas, y desde local se deben crear manualmente las siguientes carpetas:
+Cuando las pruebas se ejecutan de manera local o en un pipeline, se deben generar las carpetas. Desde el pipeline, se debe pasar la creación de esas carpetas, y desde local se deben crear manualmente las siguientes carpetas:
 
 ```
 📂 output/
@@ -116,16 +114,17 @@ Desde el pipeline se debe pasar la creación de esas carpetas, y desde local se 
  ┗ 📂 allure-results   ✅ (Datos para la generación del reporte)
 ```
 
-## Pipeline
+## Pipeline ⚙️
+
 A la hora de montar el pipeline es indispensable tener:
 ```
 Sistema Operativo
 Playwright
-Dependencias del codigo
+Dependencias del código
 Java
 ```
 
-## Contribución
+## Contribución 🤝
 
 Si deseas contribuir a este proyecto, sigue estos pasos:
 
@@ -135,10 +134,10 @@ Si deseas contribuir a este proyecto, sigue estos pasos:
 4. Sube tus cambios a tu repositorio: `git push origin feature/nueva-caracteristica`.
 5. Envía una solicitud de extracción (pull request).
 
-## Soporte
+## Soporte ❓
 
 Si tienes alguna pregunta o encuentras algún problema, no dudes en abrir un issue en el [repositorio](https://github.com/Khimea/POC-Playwright/issues).
 
-## Licencia
+## Licencia 📜
 
 Este proyecto está bajo la Licencia [MIT](https://opensource.org/licenses/MIT).
