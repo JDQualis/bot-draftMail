@@ -1,5 +1,5 @@
 
-# POC-Playwright 🚀
+# POC-Playwright 
 
 Este repositorio contiene una prueba de concepto (PoC) para el uso de Playwright en proyectos de automatización de pruebas, utilizando Cucumber y Node.js.
 
@@ -76,7 +76,7 @@ Abre las configuraciones de la extensión y edita el archivo `settings.json` con
 7. Instalar Java para el reporte ALLURE:
 Es necesario instalar Java para Allure.
 
-## Uso 🏃‍♂️
+## Uso 
 
 Una vez que hayas instalado las dependencias, puedes ejecutar las pruebas utilizando los siguientes comandos:
 ```
