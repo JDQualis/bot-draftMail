@@ -81,12 +81,26 @@ Debemos agregar este codigo dentro del JSON para que funcione de manera correcta
 
 Una vez que hayas instalado las dependencias, puedes ejecutar las pruebas utilizando los siguientes comandos:
 ```
-npm run test            # Ejecuta las pruebas de Cucumber y genera reporte
-npm run test:local      # Ejecuta las pruebas en modo no headless y genera los reportes
-npm run test:headless   # Ejecuta las pruebas en modo headless (sin UI) y genera los reportes
-npm run test:mobile     # Ejecuta las pruebas en un entorno simulado de móvil
-npm run test:tag        # Ejecuta las pruebas con un filtro de tags
-npm run generate-report # Genera y abre el reporte de Allure
+npm run test              # Ejecuta las pruebas de Cucumber y genera reporte
+npm run test:local        # Ejecuta las pruebas en modo no headless y genera los reportes
+npm run test:headless     # Ejecuta las pruebas en modo headless (sin UI) y genera los reportes
+npm run test:mobile       # Ejecuta las pruebas en un entorno simulado de móvil
+npm run test:tag          # Ejecuta las pruebas con un filtro de tags
+npm run generate-report   # Genera y abre el reporte de Allure
+```
+
+Para utilizar los tags, debemos ingresar el tag previo al step en el Feature 
+
+```
+ @tagEjemplo
+        Scenario: Solicitud Chequera
+            Given Dirigirse a HomeBanking
+```
+
+El comando para disparar el tag es el siguiente:
+
+```
+npm run test:tag --tags "@tagEjemplo"
 ```
 
 ## Creación de carpeta para Generar Reportes 
@@ -97,17 +111,19 @@ Desde el pipeline se debe pasar la creación de esas carpetas, y desde local se 
 ```
 📂 output/
  ┣ 📂 screenshots      ✅ (Capturas de pantalla en caso de fallos)
- ┣ 📂 videos          ✅ (Grabaciones de la ejecución)
- ┣ 📂 allure-report   ✅ (Reporte HTML generado)
- ┗ 📂 allure-results  ✅ (Datos para la generación del reporte)
+ ┣ 📂 videos           ✅ (Grabaciones de la ejecución)
+ ┣ 📂 allure-report    ✅ (Reporte HTML generado)
+ ┗ 📂 allure-results   ✅ (Datos para la generación del reporte)
 ```
 
 ## Pipeline
 A la hora de montar el pipeline es indispensable tener:
+```
 Sistema Operativo
 Playwright
 Dependencias del codigo
 Java
+```
 
 ## Contribución
 
