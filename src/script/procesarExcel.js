@@ -3,19 +3,67 @@ const fs = require('fs');
 const XLSX = require('xlsx');
 const { Document, Packer, Paragraph, TextRun } = require('docx');
 const { google } = require('googleapis');
-const { Readable } = require('stream');
+const generarContenidoIA = require('./pasarPrompt');
 
 const FOLDER_ID = '1ZGFBJKuNcqDY59RQNh8rxR5Jm8emBgg_';
 const nombreArchivo = process.env.nombreArchivo || 'La_Caja.xlsx';
 
+function obtenerFechaActual() {
+  const hoy = new Date();
+  const dd = String(hoy.getDate()).padStart(2, '0');
+  const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+  const yyyy = hoy.getFullYear();
+  return `${dd}-${mm}-${yyyy}`;
+}
+
 async function procesarYSubir() {
-  // Auth con Google
   const auth = new google.auth.GoogleAuth({
     keyFile: 'service-account.json',
     scopes: ['https://www.googleapis.com/auth/drive'],
   });
   const authClient = await auth.getClient();
   const drive = google.drive({ version: 'v3', auth: authClient });
+
+  let outputFolderId;
+  const outputSearch = await drive.files.list({
+    q: `'${FOLDER_ID}' in parents and name='output' and mimeType='application/vnd.google-apps.folder' and trashed = false`,
+    fields: 'files(id, name)',
+  });
+
+  if (outputSearch.data.files.length > 0) {
+    outputFolderId = outputSearch.data.files[0].id;
+  } else {
+    const outputCreate = await drive.files.create({
+      requestBody: {
+        name: 'output',
+        mimeType: 'application/vnd.google-apps.folder',
+        parents: [FOLDER_ID],
+      },
+      fields: 'id',
+    });
+    outputFolderId = outputCreate.data.id;
+  }
+
+  const fecha = obtenerFechaActual();
+  let fechaFolderId;
+  const fechaSearch = await drive.files.list({
+    q: `'${outputFolderId}' in parents and name='${fecha}' and mimeType='application/vnd.google-apps.folder' and trashed = false`,
+    fields: 'files(id, name)',
+  });
+
+  if (fechaSearch.data.files.length > 0) {
+    fechaFolderId = fechaSearch.data.files[0].id;
+  } else {
+    const fechaCreate = await drive.files.create({
+      requestBody: {
+        name: fecha,
+        mimeType: 'application/vnd.google-apps.folder',
+        parents: [outputFolderId],
+      },
+      fields: 'id',
+    });
+    fechaFolderId = fechaCreate.data.id;
+  }
 
   const excelPath = path.join(__dirname, 'downloads', nombreArchivo);
   if (!fs.existsSync(excelPath)) {
@@ -27,34 +75,20 @@ async function procesarYSubir() {
   const sheetName = workbook.SheetNames[0];
   const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-  console.log(`📊 Total de filas leídas: ${data.length}`);
-
-  const outputPath = path.join(__dirname, 'output');
-  if (!fs.existsSync(outputPath)) {
-    fs.mkdirSync(outputPath, { recursive: true });
-  }
-
-  let procesados = 0;
-  let index = 1;
-
   for (const fila of data) {
-    console.log('📄 Fila:', fila);
+    if (fila.PROCESADOS?.toLowerCase() === 'si') {
+      const destinatario = fila.DESTINATARIO || 'SinNombre';
+      const baseName = path.parse(nombreArchivo).name;
+      const nombreDoc = `${baseName}_${destinatario}.docx`;
 
-    const estadoRaw = fila?.Procesado ?? '';
-    const estado = estadoRaw
-      .toString()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase()
-      .trim();
+      const contenido = await generarContenidoIA(fila);
 
-    if (estado === 'si') {
       const doc = new Document({
         sections: [
           {
             children: [
               new Paragraph({
-                children: [new TextRun("HOLA, FUNCIONO")],
+                children: [new TextRun(contenido)],
               }),
             ],
           },
@@ -62,34 +96,21 @@ async function procesarYSubir() {
       });
 
       const buffer = await Packer.toBuffer(doc);
-      const nombreDoc = `salida_${index++}.docx`;
 
-      // Guardar local
-      fs.writeFileSync(path.join(outputPath, nombreDoc), buffer);
-      console.log(`💾 Guardado localmente: ${nombreDoc}`);
-
-      // Subir a Drive
       await drive.files.create({
         requestBody: {
           name: nombreDoc,
           mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-          parents: [FOLDER_ID],
+          parents: [fechaFolderId],
         },
         media: {
           mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-          body: Readable.from(buffer),
+          body: Buffer.from(buffer),
         },
       });
 
-      console.log(`📤 Subido a Drive: ${nombreDoc}`);
-      procesados++;
+      console.log(`📤 Subido: ${nombreDoc} en /output/${fecha}/`);
     }
-  }
-
-  if (procesados === 0) {
-    console.warn('⚠️ No se encontró ninguna fila con "Procesado = si"');
-  } else {
-    console.log(`✅ Total de archivos generados y subidos: ${procesados}`);
   }
 }
 

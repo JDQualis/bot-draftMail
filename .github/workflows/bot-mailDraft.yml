@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       nombreArchivo:
-        description: "En este campo hay que escribir el nombre del archivo Excel a buscar (ej: datos.xlsx)"
+        description: "Nombre del archivo Excel a descargar"
         required: true
-        default: "Nombre Empresa"
+        default: ".xlsx"
 
 jobs:
   build:
