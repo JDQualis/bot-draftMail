@@ -1,0 +1,33 @@
+name: CI Manual Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      nombreArchivo:
+        description: "En este campo hay que escribir el nombre del archivo Excel a buscar (ej: datos.xlsx)"
+        required: true
+        default: "Nombre Empresa"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Crear archivo de credenciales (service-account.json)
+        run: echo "${{ secrets.DRIVE_KEY }}" > service-account.json
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Descargar archivo Excel desde Drive
+        env:
+          nombreArchivo: ${{ github.event.inputs.nombreArchivo }}
+        run: node descargarExcel.js
+
+      - name: Procesar Excel y generar DOCX
+        env:
+          nombreArchivo: ${{ github.event.inputs.nombreArchivo }}
+        run: node src/script/procesarExcel.js

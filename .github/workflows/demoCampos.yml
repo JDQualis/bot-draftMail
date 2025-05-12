@@ -1,0 +1,29 @@
+name: CI Manual Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      nombreArchivo:
+        description: "En este campo hay que escribir el nombre del archivo Excel a buscar (ej: datos.xlsx)"
+        required: true
+        default: "Nombre Empresa"
+      # nombreEmpresa:
+      #   description: "Aquí va el nombre de la empresa"
+      #   required: false
+      #   default: ""
+      # vertical:
+      #   description: "vertical"
+      #   required: false
+      #   default: ""
+      # prompt:
+      #   description: "posible prompt"
+      #   required: false
+      #   default: ""
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
