@@ -1,4 +1,4 @@
-name: CI Manual Test
+name: Bot Mail Draft
 
 on:
   workflow_dispatch:
@@ -30,4 +30,10 @@ jobs:
       - name: Procesar Excel y generar DOCX
         env:
           nombreArchivo: ${{ github.event.inputs.nombreArchivo }}
+        run: node src/script/procesarExcel.js
+
+      - name: Procesar Excel, generar contenido IA y subir DOCX
+        env:
+          nombreArchivo: ${{ github.event.inputs.nombreArchivo }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: node src/script/procesarExcel.js
