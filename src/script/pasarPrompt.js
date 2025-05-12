@@ -5,13 +5,14 @@ async function generarContenidoIA(fila, apiKey) {
     throw new Error("GROQ_API_KEY no fue proporcionada.");
   }
 
-  const nombre = fila.DESTINATARIO || 'Estimado/a';
+  const nombre = fila.DESTINATARIO || `${fila.Nombre || ''} ${fila.Apellido || ''}`.trim() || 'Estimado/a';
   const empresa = fila.EMPRESA || 'Empresa sin nombre';
+  const cargo = fila.Cargo || 'Cargo no especificado';
   const tipo = fila.TIPO || 'N/A';
   const detalle = fila.DETALLE || 'Sin detalle';
 
   const prompt = `
-Generá un cuerpo de correo electrónico breve, claro y profesional, dirigido a la persona llamada "${nombre}".
+Generá un cuerpo de correo electrónico breve, claro y profesional, dirigido a la persona llamada "${nombre}", quien ocupa el cargo de "${cargo}".
 
 Usá un tono cordial y directo. Este correo es parte de un proceso automatizado de comunicación y puede incluir solicitudes, información o seguimiento de tareas, según los siguientes datos:
 
