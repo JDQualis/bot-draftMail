@@ -1,9 +1,10 @@
-// src/script/pasarPrompt.js
 const axios = require('axios');
 
-const GROQ_API_KEY = process.env.GROQ_API_KEY;
+async function generarContenidoIA(fila, apiKey) {
+  if (!apiKey) {
+    throw new Error("GROQ_API_KEY no fue proporcionada.");
+  }
 
-async function generarContenidoIA(fila) {
   const nombre = fila.DESTINATARIO || 'Estimado/a';
   const empresa = fila.EMPRESA || 'Empresa sin nombre';
   const tipo = fila.TIPO || 'N/A';
@@ -33,7 +34,7 @@ Importante:
     },
     {
       headers: {
-        Authorization: `Bearer ${GROQ_API_KEY}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
     }

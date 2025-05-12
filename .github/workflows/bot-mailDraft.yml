@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       nombreArchivo:
-        description: "Nombre del archivo Excel a descargar"
+        description: "Nombre del archivo Excel a descargar. (Dejar extensión .xlsx)"
         required: true
         default: ".xlsx"
 
@@ -26,11 +26,6 @@ jobs:
         env:
           nombreArchivo: ${{ github.event.inputs.nombreArchivo }}
         run: node src/script/descargarExcel.js
-
-      - name: Procesar Excel y generar DOCX
-        env:
-          nombreArchivo: ${{ github.event.inputs.nombreArchivo }}
-        run: node src/script/procesarExcel.js
 
       - name: Procesar Excel, generar contenido IA y subir DOCX
         env:
