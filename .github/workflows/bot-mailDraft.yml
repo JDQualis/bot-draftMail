@@ -25,7 +25,7 @@ jobs:
       - name: Descargar archivo Excel desde Drive
         env:
           nombreArchivo: ${{ github.event.inputs.nombreArchivo }}
-        run: node descargarExcel.js
+        run: node src/script/descargarExcel.js
 
       - name: Procesar Excel y generar DOCX
         env:

@@ -1,4 +1,4 @@
-name: CI Manual Test
+name: demo Campos
 
 on:
   workflow_dispatch:
