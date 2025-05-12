@@ -86,7 +86,7 @@ async function procesarYSubir() {
 
   for (const [index, fila] of data.entries()) {
     console.log(`➡️ Procesando fila ${index + 1}:`, fila);
-    if (fila.PROCESADOS?.toLowerCase() === 'si') {
+    if (fila.PROCESADO?.toLowerCase() === 'si') {
       const destinatario = fila.DESTINATARIO || 'SinNombre';
       const baseName = path.parse(nombreArchivo).name;
       const nombreDoc = `${baseName}_${destinatario}.docx`;
@@ -125,7 +125,7 @@ async function procesarYSubir() {
         console.error(`❌ Error procesando fila ${index + 1}:`, err.message);
       }
     } else {
-      console.log(`⏭️ Fila ${index + 1} omitida (PROCESADOS != 'si')`);
+      console.log(`⏭️ Fila ${index + 1} omitida (PROCESADO!= 'si')`);
     }
   }
 
