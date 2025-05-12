@@ -16,8 +16,8 @@ Generá un cuerpo de correo electrónico breve, claro y profesional, dirigido a 
 
 Usá un tono cordial y directo. Este correo es parte de un proceso automatizado de comunicación y puede incluir solicitudes, información o seguimiento de tareas, según los siguientes datos:
 
-Empresa: ${empresa}  
-Tipo: ${tipo}  
+Empresa: ${empresa}
+Tipo: ${tipo}
 Detalle: ${detalle}
 
 Escribí solo el cuerpo del correo, sin asunto ni encabezados técnicos. Iniciá con un saludo y cerrá con una firma genérica como: "Saludos cordiales".
@@ -25,7 +25,9 @@ Escribí solo el cuerpo del correo, sin asunto ni encabezados técnicos. Iniciá
 Importante:
 - No uses lenguaje robótico ni plantillas repetitivas.
 - Mantené un tono humano, como si un profesional lo hubiera escrito personalmente.
-`;
+`.trim();
+
+  console.log('🧠 Prompt generado para IA:\n', prompt);
 
   const response = await axios.post(
     'https://api.groq.com/openai/v1/chat/completions',
