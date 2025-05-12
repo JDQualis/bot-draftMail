@@ -8,7 +8,6 @@ const FOLDER_ID = '1ZGFBJKuNcqDY59RQNh8rxR5Jm8emBgg_';
 const nombreArchivo = process.env.nombreArchivo || 'La_Caja.xlsx';
 
 async function procesarYSubir() {
-  // Autenticación con Google
   const auth = new google.auth.GoogleAuth({
     keyFile: 'service-account.json',
     scopes: ['https://www.googleapis.com/auth/drive'],
@@ -16,7 +15,6 @@ async function procesarYSubir() {
   const authClient = await auth.getClient();
   const drive = google.drive({ version: 'v3', auth: authClient });
 
-  // Leer Excel local
   const excelPath = path.join(__dirname, 'downloads', nombreArchivo);
   if (!fs.existsSync(excelPath)) {
     console.error(`❌ No existe el archivo: ${excelPath}`);
@@ -27,9 +25,21 @@ async function procesarYSubir() {
   const sheetName = workbook.SheetNames[0];
   const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
+  console.log(`📊 Total de filas leídas: ${data.length}`);
+
+  const outputPath = path.join(__dirname, 'output');
+  if (!fs.existsSync(outputPath)) {
+    fs.mkdirSync(outputPath, { recursive: true });
+  }
+
+  let procesados = 0;
   let index = 1;
+
   for (const fila of data) {
-    if (fila.PROCESADOS?.toLowerCase() === 'si') {
+    console.log('📄 Fila:', fila);
+
+    const estado = fila?.Procesado?.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    if (estado === 'si') {
       const doc = new Document({
         sections: [
           {
@@ -45,7 +55,11 @@ async function procesarYSubir() {
       const buffer = await Packer.toBuffer(doc);
       const nombreDoc = `salida_${index++}.docx`;
 
-      // Subir a Google Drive en la misma carpeta
+      // Guardar local
+      fs.writeFileSync(path.join(outputPath, nombreDoc), buffer);
+      console.log(`💾 Guardado localmente: ${nombreDoc}`);
+
+      // Subir a Drive
       await drive.files.create({
         requestBody: {
           name: nombreDoc,
@@ -58,8 +72,15 @@ async function procesarYSubir() {
         },
       });
 
-      console.log(`📤 Subido: ${nombreDoc}`);
+      console.log(`📤 Subido a Drive: ${nombreDoc}`);
+      procesados++;
     }
+  }
+
+  if (procesados === 0) {
+    console.warn('⚠️ No se encontró ninguna fila con "Procesado = si"');
+  } else {
+    console.log(`✅ Total de archivos generados: ${procesados}`);
   }
 }
 
