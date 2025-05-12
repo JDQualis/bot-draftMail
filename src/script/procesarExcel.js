@@ -3,11 +3,13 @@ const fs = require('fs');
 const XLSX = require('xlsx');
 const { Document, Packer, Paragraph, TextRun } = require('docx');
 const { google } = require('googleapis');
+const { Readable } = require('stream');
 
 const FOLDER_ID = '1ZGFBJKuNcqDY59RQNh8rxR5Jm8emBgg_';
 const nombreArchivo = process.env.nombreArchivo || 'La_Caja.xlsx';
 
 async function procesarYSubir() {
+  // Auth con Google
   const auth = new google.auth.GoogleAuth({
     keyFile: 'service-account.json',
     scopes: ['https://www.googleapis.com/auth/drive'],
@@ -38,7 +40,14 @@ async function procesarYSubir() {
   for (const fila of data) {
     console.log('📄 Fila:', fila);
 
-    const estado = fila?.Procesado?.toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    const estadoRaw = fila?.Procesado ?? '';
+    const estado = estadoRaw
+      .toString()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim();
+
     if (estado === 'si') {
       const doc = new Document({
         sections: [
@@ -68,7 +77,7 @@ async function procesarYSubir() {
         },
         media: {
           mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-          body: Buffer.from(buffer),
+          body: Readable.from(buffer),
         },
       });
 
@@ -80,7 +89,7 @@ async function procesarYSubir() {
   if (procesados === 0) {
     console.warn('⚠️ No se encontró ninguna fila con "Procesado = si"');
   } else {
-    console.log(`✅ Total de archivos generados: ${procesados}`);
+    console.log(`✅ Total de archivos generados y subidos: ${procesados}`);
   }
 }
 
